@@ -1,17 +1,45 @@
-apiVersion: automation.cloudbees.io/v1alpha1
-kind: workflow
-name: My automation
+name: CI/CD
 
 on:
   push:
     branches:
-      - '**'
+      - main
 
 jobs:
   build:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Say hello
-        uses: docker://golang:1.20.3-alpine3.17
-        shell: sh
-        run: |
-          echo "hello world"
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Build and Test
+      run: |
+        echo "Building and testing your code..."
+        # Puedes agregar aquí comandos específicos para compilar y probar tu código
+
+  deploy-staging:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Deploy to Staging
+      if: success()  # Solo despliega si el trabajo "build" fue exitoso
+      run: |
+        echo "Deploying to staging environment..."
+        # Puedes agregar aquí comandos específicos para implementar en el entorno de staging
+
+  deploy-production:
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Deploy to Production
+      if: success()  # Solo despliega si el trabajo "deploy-staging" fue exitoso
+      run: |
+        echo "Deploying to production environment..."
+        # Puedes agregar aquí comandos específicos para implementar en el entorno de producción
