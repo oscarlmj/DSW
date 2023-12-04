@@ -2,7 +2,7 @@
     $servername="localhost";
     $username="mitiendaonline";
     $pass="v5EKL4TuljXCe*)[";
-    $db="repasoexamen";
+    $db="mitiendaonline";
 
     try{
         $conn = new PDO("mysql:host=$servername;dbname=$db" ,$username,$pass);

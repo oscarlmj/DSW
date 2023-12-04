@@ -32,10 +32,6 @@ try {
         <!-- Recorre cada elemento de la BBDD para mostrar toda la informacion en la tabla -->
         <?php foreach ($resultados as $blog) {
 
-
-
-
-
             echo"<tr>";
             $consulta = $conn->prepare("SELECT EntradaID FROM entradastags WHERE TagID='$id'");
             $consulta->execute();
