@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulario de Dudas del Alumnado</title>
+    <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="https://www3.gobiernodecanarias.org/educacion/cau_ce/cookies/cookieconsent.min.css"/><script  type="text/javascript" src="https://www3.gobiernodecanarias.org/educacion/cau_ce/cookies/cookieconsent.min.js"></script><script type="text/javascript" src="https://www3.gobiernodecanarias.org/educacion/cau_ce/cookies/cauce_cookie.js"></script><script type="text/javascript" src="https://www3.gobiernodecanarias.org/educacion/cau_ce/estadisticasweb/scripts/piwik-base.js"></script><script type="text/javascript" src="https://www3.gobiernodecanarias.org/educacion/cau_ce/estadisticasweb/scripts/piwik-eforma.js"></script></head>
+<body>
+    <h1>Fomulario para el envío de dudas del alumnado</h1>
+    <form action="./recibe_formulario_t1_ut2.php" method="post">
+        <!-- Campo de Nombre -->
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required maxlength="40"><br><br>
+
+        <!-- Campo con la descripción de la duda -->
+        <label for="duda">Duda:</label>
+        <textarea id="duda" name="duda" required maxlength="200"></textarea><br><br>
+
+        <!-- Checkbox para Módulos Relacionados -->
+        <label>Módulos relacionados con la duda (selecciona al menos uno):</label><br>
+        <input type="checkbox" id="dor" name="modulos[]" value="DOR">
+        <label for="dor">DOR</label><br>
+        <input type="checkbox" id="dpl" name="modulos[]" value="DPL">
+        <label for="dpl">DPL</label><br>
+        <input type="checkbox" id="dew" name="modulos[]" value="DEW">
+        <label for="dew">DEW</label><br>
+        <input type="checkbox" id="dsw" name="modulos[]" value="DSW">
+        <label for="dsw">DSW</label><br>
+        <input type="checkbox" id="emr" name="modulos[]" value="EMR">
+        <label for="emr">EMR</label><br><br>
+
+        <input type="submit" value="Enviar">
+    </form>
+
+</body>
+</html>
