@@ -27,18 +27,19 @@ try{
         $consulta=$sql->fetch(PDO::FETCH_ASSOC);
         $color=$consulta['color_fondo'];
 
-        //Si el color no esta establecido en la bbdd lo pone como gris.
-        if($color==null)
-        {  
-            setcookie("color_fondo","gray",time() + 3600*24);
-        }
-        //Si esta establecido crea una cookie con el valor del color.
-        else
-        setcookie("color_fondo", $color, time() + 3600*24);
 
         //Si la contraseña es correcta accede a la pagina y crea una cookie con el nombre del usuario.
         if(password_verify($_POST['psw'],$pass))
         {
+            //Si el color no esta establecido en la bbdd lo pone como gris.
+            if($color==null)
+            {  
+                setcookie("color_fondo","gray",time() + 3600*24);
+            }
+            //Si esta establecido crea una cookie con el valor del color.
+            else
+            setcookie("color_fondo", $color, time() + 3600*24);
+
             setcookie("nombre",$nombre, time() + 1300);
             echo("Contraseña correcta");
             header('Location: ./nav.php');
@@ -47,11 +48,16 @@ try{
         {
             if(!isset($_COOKIE['errores_login']))
             {
-                setcookie("errores_login",0);
+               setcookie("errores_login",1);
             }
-            $_COOKIE['errores_login']++;
+            else
+            {
+                $errores_login=$_COOKIE['errores_login'];
+                $errores_login++;
+                setcookie("errores_login",$errores_login);
+            }
             header('Location: ./form_login.php');
-        } 
+        }
     }
 }catch (Exception $e) {
     echo $e->getMessage();
