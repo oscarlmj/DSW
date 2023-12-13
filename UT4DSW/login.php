@@ -6,9 +6,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contrasena_form = $_POST["contrasena"];
 
     try {
-        $dsn = "mysql:host=localhost;dbname=ut4";
-        $usuario = "dsw";
-        $contrasena = "Elrincon1234.";
+        $dsn = "mysql:host=localhost;dbname=mitiendaonline";
+        $usuario = "Victor";
+        $contrasena = "hola";
 
         $conexion = new PDO($dsn, $usuario, $contrasena);
         $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -32,10 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     } else {
         //Si la cookie no existe, la creamos iniciada a 1.
-        if (!isset($_COOKIE['errores_login_' . $usuario_form])) {
+        if (!isset($_COOKIE['errores_login_' . $usuario_form])){
             $num_errores = 1;
             setcookie("errores_login_" . $usuario_form, $num_errores, time() + 1800);
-        } else {
+        } else{
             //Si la cookie existe aumentamos su valor.
             $num_errores = $_COOKIE['errores_login_' . $usuario_form];
             $num_errores++;

@@ -1,6 +1,6 @@
 <?php
 session_start();
-//Si la sesió está iniciada muestra la tabla.
+//Si la sesión está iniciada muestra la tabla.
 if (!empty($_SESSION['usuario'])) {
     // Mostramos la cesta de la compra del usuario
     //Creamos un array a partir de $_SESSION['productos'], donde previamente almacenamos el array_cesta.
