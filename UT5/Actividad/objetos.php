@@ -121,7 +121,7 @@ function listarviviendas()
 
 //Ejecución.
 crearUrbanizacion();
-$duplex  =new Duplex(2,2,2,"Amarillo");
+$duplex = new Duplex(2,2,2,"Amarillo");
 array_push($viviendas,$duplex);
 $duplex->pintarCasa();
 listarviviendas();
