@@ -7,7 +7,7 @@
   </div>
   <div class="card-body">
 
-    <form method="POST" action="">
+    <form method="POST" action="{{ route('admin.product.add') }}" enctype="multipart/form-data">
       @csrf
       <div class="row">
         <div class="col">
@@ -31,6 +31,10 @@
         <label class="form-label">Descripción</label>
         <textarea class="form-control" name="description" rows="3"></textarea>
       </div>
+      <div class="mb-3">
+        <label for="imagen" class="form-label">Imagen</label>
+        <input type="file" name="image" class="form-control">
+      </div>
       <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
   </div>
@@ -51,14 +55,29 @@
         </tr>
       </thead>
       <tbody>
+        
+        @foreach ($viewData["products"] as $product)
         <tr>
-          <td>[ ID ]</td>
-          <td>[ NOMBRE ]</td>
-          <td><a href="#">Editar</a></td>
-          <td><a href="#">Eliminar</a></td>
+        <td>{{ $product["id"] }}</td>
+        <td>{{ $product["name"] }}</td>
+        <td><a href="#">Editar</a></td>
+        <td><a href="#">Eliminar</a></td>
         </tr>
+        @endforeach
+
       </tbody>
     </table>
   </div>
 </div>
+
+@if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors as $error)
+                <li>{{ $error[0] }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 @endsection
