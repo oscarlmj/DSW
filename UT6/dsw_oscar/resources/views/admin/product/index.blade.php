@@ -9,6 +9,7 @@
 
     <form method="POST" action="{{ route('admin.product.add') }}" enctype="multipart/form-data">
       @csrf
+      @method('DELETE')
       <div class="row">
         <div class="col">
           <div class="mb-3 row">
@@ -61,7 +62,13 @@
         <td>{{ $product["id"] }}</td>
         <td>{{ $product["name"] }}</td>
         <td><a href="#">Editar</a></td>
-        <td><a href="#">Eliminar</a></td>
+        <td>
+          <a href="{{ route('admin.product.destroy', ['id' => $product->id]) }}" onclick="event.preventDefault(); if(confirm('¿Estás seguro de que deseas eliminar este producto?')) { document.getElementById('eliminar-producto-{{ $product->id }}').submit(); }">Eliminar</a>
+          <form id="eliminar-producto-{{ $product->id }}" action="{{ route('admin.product.destroy', ['id' => $product->id]) }}" method="POST" style="display: none;">
+        @csrf
+        @method('DELETE')
+          </form>
+        </td>
         </tr>
         @endforeach
 

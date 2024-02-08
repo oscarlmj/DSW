@@ -63,4 +63,17 @@ class AdminProductController extends Controller
         //return view('admin.product.index')->with("viewData", $viewData);
         return redirect()->route('admin.product.index')->with("viewData", $viewData);
     }
+
+    public function destroy($id)
+    {
+
+        $viewData = [];
+        $viewData["title"] = "Admin Page - Products - Online Store";
+        $viewData["products"] = Product::all();
+
+        $product = Product::findOrFail($id);
+        $product->delete();
+        return redirect()->route('admin.product.index')->with("viewData", $viewData);
+    
+    }
 }
