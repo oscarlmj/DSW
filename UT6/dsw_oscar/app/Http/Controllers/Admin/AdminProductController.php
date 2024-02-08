@@ -76,4 +76,57 @@ class AdminProductController extends Controller
         return redirect()->route('admin.product.index')->with("viewData", $viewData);
     
     }
+
+    public function edit($id)
+    {
+        $viewData = [];
+        $viewData["title"] = "Admin Page - Products - Online Store";
+
+        $product = Product::findOrFail($id);
+        $viewData["products"] = Product::all();
+        $viewData['product'] = $product;
+
+        return view('admin.product.edit')->with("viewData", $viewData);
+    }
+
+    public function update($id, Request $request)
+    {
+        $viewData = [];
+        $viewData["title"] = "Admin Page - Products - Online Store";
+    
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'price' => 'required|numeric|min:1',
+                'description' => 'required|min:10|max:100',
+            ]);
+        } catch (ValidationException $e) {
+            $errorsArray = $e->errors();
+            return view('admin.product.index', ['errors' => $errorsArray])->with("viewData", $viewData);
+        }
+    
+        // Busca el producto por su ID
+        $product = Product::findOrFail($id);
+    
+        // Actualiza los campos del producto
+        $product->name = $request->input('name');
+        $product->description = $request->input('description');
+        $product->price = $request->input('price');
+    
+        // Guarda los cambios en la base de datos
+        $product->save();
+    
+        // Si se ha subido una nueva imagen, procesa y guarda la imagen
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $ext = $request->file('image')->extension();
+            $fileName = $product->id . "." . $ext;
+            $product->image = $fileName;
+            Storage::disk('public')->put($fileName, file_get_contents($file->path()));
+            $product->save();
+        }
+    
+        // Redirige de vuelta a la página de administración de productos con un mensaje de éxito
+        return redirect()->route('admin.product.index')->with("viewData", $viewData);
+    }
 }

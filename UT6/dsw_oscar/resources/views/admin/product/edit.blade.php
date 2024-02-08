@@ -7,38 +7,24 @@
   </div>
   <div class="card-body">
 
-    <form method="POST" action="{{ route('admin.product.add') }}" enctype="multipart/form-data">
-      @csrf
-      @method('DELETE')
-      <div class="row">
-        <div class="col">
-          <div class="mb-3 row">
-            <label class="col-lg-2 col-md-6 col-sm-12 col-form-label">Nombre:</label>
-            <div class="col-lg-10 col-md-6 col-sm-12">
-              <input name="name" value="" type="text" class="form-control">
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3 row">
-            <label class="col-lg-2 col-md-6 col-sm-12 col-form-label">Precio:</label>
-            <div class="col-lg-10 col-md-6 col-sm-12">
-              <input name="price" value="" type="number" class="form-control">
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="mb-3">
-        <label class="form-label">Descripción</label>
-        <textarea class="form-control" name="description" rows="3"></textarea>
-      </div>
-      <div class="mb-3">
-        <label for="imagen" class="form-label">Imagen</label>
-        <input type="file" name="image" class="form-control">
-      </div>
-      <button type="submit" class="btn btn-primary">Enviar</button>
-    </form>
-  </div>
+  <form action="{{ route('admin.product.update', $viewData['product']->id) }}" method="POST">
+        @csrf
+        @method('PUT')
+
+        <label for="name" class="form-label">Product Name:</label>
+        <input type="text" id="name" name="name" value="{{ $viewData['product']->name }}" required class="form-control">
+
+        <label for="description" class="form-label">Description:</label>
+        <textarea id="description" name="description" required class="form-control">{{ $viewData['product']->description }}</textarea>
+
+        <label for="price" class="form-label">Price:</label>
+
+        <input type="number" id="price" name="price" value="{{ $viewData['product']->price }}" required class="form-control">
+
+        <!-- Otros campos del formulario -->
+
+        <button type="submit" class="btn btn-primary">Update Product</button>
+    </form>  </div>
 </div>
 
 <div class="card">
@@ -61,9 +47,7 @@
         <tr>
         <td>{{ $product["id"] }}</td>
         <td>{{ $product["name"] }}</td>
-        <td>
-    <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}">Editar</a>
-</td>
+        <td><a href="#">Editar</a></td>
         <td>
           <a href="{{ route('admin.product.destroy', ['id' => $product->id]) }}" onclick="event.preventDefault(); if(confirm('¿Estás seguro de que deseas eliminar este producto?')) { document.getElementById('eliminar-producto-{{ $product->id }}').submit(); }">Eliminar</a>
           <form id="eliminar-producto-{{ $product->id }}" action="{{ route('admin.product.destroy', ['id' => $product->id]) }}" method="POST" style="display: none;">
